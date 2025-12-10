@@ -34,17 +34,29 @@ const WebDevelopmentPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [typedText, setTypedText] = useState('');
   const [charIndex, setCharIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false); // ✅ नया state
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 }); // ✅ नया state
+  
   const fullText = "console.log('Hello, beautiful world!');";
 
+  // ✅ Check if we're on client side
   useEffect(() => {
-    if (charIndex < fullText.length) {
+    setIsClient(true);
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  }, []);
+
+  useEffect(() => {
+    if (charIndex < fullText.length && isClient) {
       const timeout = setTimeout(() => {
         setTypedText(prev => prev + fullText[charIndex]);
         setCharIndex(charIndex + 1);
       }, 100);
       return () => clearTimeout(timeout);
     }
-  }, [charIndex, fullText]);
+  }, [charIndex, fullText, isClient]);
 
   const journey = [
     {
@@ -111,6 +123,15 @@ const WebDevelopmentPage = () => {
     { time: "5:00 AM", activity: "Watching the sunrise, code finally works", emoji: "🌅" }
   ];
 
+  // ✅ Only render if client side
+  if (!isClient) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className={`min-h-screen transition-colors duration-500 ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-br from-blue-50 via-white to-purple-50'}`}>
       
@@ -121,8 +142,8 @@ const WebDevelopmentPage = () => {
             key={i}
             className="absolute"
             initial={{ 
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight
+              x: Math.random() * windowSize.width,
+              y: Math.random() * windowSize.height
             }}
             animate={{
               y: [null, -30, 30, -30],
