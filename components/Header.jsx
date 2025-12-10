@@ -60,7 +60,7 @@ const Header = () => {
   ];
 
   const quickActions = [
-    { icon: <Phone className="w-4 h-4" />, label: 'Call Us', href: 'tel:+919876543210' },
+    { icon: <Phone className="w-4 h-4" />, label: 'Call Us', href: 'tel:+919973132362' },
     { icon: <Search className="w-4 h-4" />, label: 'Search', action: () => setSearchOpen(true) },
   ];
 
