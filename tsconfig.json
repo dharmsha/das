@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/Contact/page.jsx", "components/Footer.jsx"  ],
+, "app/Contact/page.jsx", "components/Footer.jsx", "components/Vision.jsx"  ],
   "exclude": ["node_modules"]
 }
